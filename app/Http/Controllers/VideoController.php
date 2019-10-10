@@ -40,9 +40,43 @@ class VideoController extends Controller
         $video->title = $request->input('title');
         $video->description = $request->input('description');
 
+        //subiendo el archivo
+        //usamos en ves de input file, ya que es un archivo
+        $video->image = $this->uploadFile($request->file('image') , 'image');
+        $video->video_path = $this->uploadFile($request->file('video') , 'video');
+
         $video->save(); //guardara en la BD la informacion proporcionada en los parametros
 
         return redirect()->route('home')->with(['message' => 'EL video se creo correctamente']);
+    }
+
+
+    private function uploadFile($file, $type)
+    {
+
+
+        $disk = ($type === 'image') ? 'images' : 'videos';
+
+
+
+        if ($file) {
+            //Capturando el path y nombre del archivo
+            $file_path = $file->getClientOriginalName();
+
+            /*
+             * \Storage::disk('images')   //usamos la funcion que seleccionara la ubicacion del disco creado en config/filesustems.php
+             * en este caso le especificamos que suba al directorio storage/images
+             * ->put($file_path, \File::get($file))  le pasamos el path de la imagen, y el archivo como tal
+             * */
+
+            \Storage::disk($disk)->put($file_path, \File::get($file));
+
+            return $file_path;
+
+        }else{
+            return null;
+        }
+
     }
 
 }
