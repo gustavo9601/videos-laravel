@@ -14,3 +14,28 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+/*===========================
+Rutas controlador videos
+=============================
+*/
+
+//Vista
+Route::get('/create-video', [
+    'as' => 'createVideo',  //alias a la ruta
+    'middleware' => 'auth',  // especificando que middleaware usara
+    'uses' => 'VideoController@createVideo'  //El controlador y funcion que usara
+]);
+
+//Guardar video por post
+Route::post('/save-video', [
+    'as' => 'saveVideo',
+    'middleware' => 'auth',
+    'uses' => 'VideoController@saveVideo'
+]);
+
