@@ -39,3 +39,10 @@ Route::post('/save-video', [
     'uses' => 'VideoController@saveVideo'
 ]);
 
+//Ruta para obtener las imagenes
+//por get le pasaremos el nombre del archivo y el tipo
+Route::get('/obtener-imagen/{filename}/{type}', [
+    'as' => 'imageVideo',
+    'middleware' => 'auth',
+    'uses' => 'VideoController@getFile'
+]);

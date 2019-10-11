@@ -18,6 +18,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    {{--Styles Owner--}}
+    {{--
+    Los assets se guardan en public/
+    --}}
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
 </head>
 <body>
 <div id="app">

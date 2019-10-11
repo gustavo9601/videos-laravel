@@ -42,8 +42,8 @@ class VideoController extends Controller
 
         //subiendo el archivo
         //usamos en ves de input file, ya que es un archivo
-        $video->image = $this->uploadFile($request->file('image') , 'image');
-        $video->video_path = $this->uploadFile($request->file('video') , 'video');
+        $video->image = $this->uploadFile($request->file('image'), 'image');
+        $video->video_path = $this->uploadFile($request->file('video'), 'video');
 
         $video->save(); //guardara en la BD la informacion proporcionada en los parametros
 
@@ -54,10 +54,7 @@ class VideoController extends Controller
     private function uploadFile($file, $type)
     {
 
-
         $disk = ($type === 'image') ? 'images' : 'videos';
-
-
 
         if ($file) {
             //Capturando el path y nombre del archivo
@@ -73,10 +70,25 @@ class VideoController extends Controller
 
             return $file_path;
 
-        }else{
+        } else {
             return null;
         }
 
+    }
+
+
+    public function getFile($filename, $type)
+    {
+
+        //type contendra si el disco es images o videos
+        $file = Storage::disk($type)->get($filename);
+
+        //Retornara la url de la imagen
+        // con un estado 200
+
+        /*De esta forma protegemos las imagenes ya que las retorna encodeadas*/
+
+        return new Response($file, 200);
     }
 
 }

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use App\Video;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,25 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //hace un select all a la tabla videos
+        //paginate(Numero de items por pagina)
+        $videos = DB::table('videos')
+            ->orderBy('videos.id', 'desc')->paginate(5);
+        // ->join('users', 'users.id', '=', 'videos.user_id')
+
+
+
+        //o
+        // $videos = Video::paginate(5);
+
+
+       /* echo '<pre>';
+        die(print_r($videos));*/
+
+        return view('home', [
+            'videos' => $videos
+        ]);
+
         return view('home');
     }
 }
