@@ -37,14 +37,17 @@
                                         con el has verifica que si existe o tiene ese imagen en el disco
                                         --}}
                                         @if(Storage::disk('images')->has($video->image))
-                                            <img src="{{url('/obtener-imagen/' . $video->image . '/images')}}"
+                                            <img src="{{url('/obtener-archivo/' . $video->image . '/images')}}"
                                                  class="card-img-top" alt="{{$video->title}}">
+                                        @else
+                                            <img src="{{url('/obtener-archivo/default.png/images')}}"
+                                                 class="card-img-top" alt="default">
                                         @endif
                                         <div class="card-body">
                                             <h4>{{$video->title}}</h4>
                                             <p class="card-text">{{$video->description}}</p>
                                             <p class="card-text">
-                                               {{-- <strong>Autor: </strong> {{$video->name}} {{$video->surname}}</p>--}}
+                                            {{-- <strong>Autor: </strong> {{$video->name}} {{$video->surname}}</p>--}}
                                         </div>
 
 
@@ -52,7 +55,8 @@
                                         @if(Auth::check())
 
                                             <div class="card-body">
-                                                <a href="#" class="btn btn-outline-info">Ver Video</a>
+                                                <a href="{{url('video-detail/' . $video->id)}}"
+                                                   class="btn btn-outline-info">Ver Video</a>
                                                 {{--Comprobacion si el usuario atenticado, es el mismo que creo el video , solo el prodra modificarlo--}}
                                                 @if(Auth::user()->id == $video->user_id)
                                                     <a href="#" class="btn btn-outline-dark">Editar Video</a>

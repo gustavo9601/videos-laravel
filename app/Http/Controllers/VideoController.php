@@ -32,7 +32,6 @@ class VideoController extends Controller
         //Valida los datos
         $validateData = $this->validate($request, $reglasValidacion);
 
-
         //Creamos el objeto de video
         $video = new Video();
         $user = \Auth::user();  //capturamos el usuario que se autentico
@@ -89,6 +88,21 @@ class VideoController extends Controller
         /*De esta forma protegemos las imagenes ya que las retorna encodeadas*/
 
         return new Response($file, 200);
+    }
+
+
+    public function getVideoDetail($video_id)
+    {
+
+        //findOrFail($id) busca por id en el tabla modelo, si no encuentra retorna un error
+        $video = Video::findOrFail($video_id);
+
+        //die(dd($video));
+
+        return view('video.video-detail', [
+            'video' => $video // le enviamos esta variable a la vista
+        ]);
+
     }
 
 }
