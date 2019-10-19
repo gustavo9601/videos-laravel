@@ -59,8 +59,8 @@
                                                    class="btn btn-outline-info">Ver Video</a>
                                                 {{--Comprobacion si el usuario atenticado, es el mismo que creo el video , solo el prodra modificarlo--}}
                                                 @if(Auth::user()->id == $video->user_id)
-                                                    <a href="#" class="btn btn-outline-dark">Editar Video</a>
-                                                    <a href="#" class="btn btn-outline-danger">Eliminar Video</a>
+                                                    <a href="{{'update-video'}}/{{$video->id}}" class="btn btn-outline-dark">Editar Video</a>
+                                                    <a href="{{url('delete-video')}}/{{$video->id}}" class="btn btn-outline-danger">Eliminar Video</a>
                                                 @endif
 
                                             </div>

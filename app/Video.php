@@ -12,15 +12,15 @@ class Video extends Model
 
     //Relacion One To Many
     //relacion de uno a muchos el Modelo Comentario
-    public function comentarios(){
-        return $this->hasMany('App\Comentario');
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 
     // Relacion de Muchos a uno
     //Le especificamos la dependiencia de la entidad
     //Ya que un usuario puede crear muchos videos
     public function user(){
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 }

@@ -43,9 +43,14 @@
                 </div>
             </div>
         </div>
-        {{--Descripcion--}}
-
         {{--comentarios--}}
+
+
+
+            {{--Incluimos la vista de comentarios y heredara los objetos y variables pasados a esta vista padre--}}
+            @include('video.comments')
+
+
     </div>
 
 

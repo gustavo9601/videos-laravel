@@ -29,7 +29,7 @@
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="{{ url('home') }}">
                 {{ config('app.name', 'Videos Laravel') }}
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -47,7 +47,8 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar video" name="search" aria-label="Search">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Buscar video" name="search"
+                               aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
                     </form>
 
@@ -95,6 +96,15 @@
     <main class="py-4">
         @yield('content')
     </main>
+
+
+    <footer class="col-10 offset-1">
+        <hr>
+        <p>
+            Mi primer proyecto con laravel, formularios, rutas, bd, modelo basicos
+        </p>
+    </footer>
+
 </div>
 </body>
 </html>

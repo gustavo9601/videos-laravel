@@ -45,6 +45,6 @@ class HomeController extends Controller
             'videos' => $videos
         ]);
 
-        return view('home');
+
     }
 }
