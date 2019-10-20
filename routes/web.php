@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 Auth::routes();
 
@@ -93,3 +91,27 @@ Route::post('update-video/{video_id}',
         'middleware' => 'auth',
         'uses' => 'VideoController@updateVideo'
     ]);
+
+//Busqueda
+Route::get('/buscar/{search?}/{filter?}', [
+    'as' => 'videoSearch',
+    'middleware' => 'auth',
+    'uses' => 'VideoController@search'
+]);
+
+//Ruta para ver el canal e nformacion del usuario
+Route::get('/canal/{user_id}', [
+    'as' => 'canalUser',
+    'middleware' => 'auth',
+    'uses' => 'UserController@channel'
+]);
+
+
+//Ruta de soporte para limpiar cache
+Route::get('/limpiar-cache', function () {
+
+    //Es como si ejecutara por una linea de comando en Artisan
+    $code = Artisan::call('cache:clear');
+
+    return $code;
+});

@@ -144,26 +144,26 @@ class VideoController extends Controller
     }
 
 
-
     public function vistaEditVideo($video_id)
     {
         $user = \Auth::user();
         $video = Video::findOrFail($video_id);
 
 
-        if($user && $user->id == $video->user_id){
+        if ($user && $user->id == $video->user_id) {
 
             return view('video.edit', [
                 'video' => $video
             ]);
-        }else{
+        } else {
 
             return redirect()->route('home');
         }
     }
 
 
-    public function updateVideo($video_id, Request $request){
+    public function updateVideo($video_id, Request $request)
+    {
 
         $rules = [
             'title' => 'required|min:5',
@@ -186,10 +186,10 @@ class VideoController extends Controller
 
         //subiendo el archivo
         //usamos en ves de input file, ya que es un archivo solo si se envia, en caso contraria se dejara tal y como esta el objeto que viene de la BD
-        if($request->file('image')){
+        if ($request->file('image')) {
             $video->image = $this->uploadFile($request->file('image'), 'image');
         }
-        if($request->file('video')){
+        if ($request->file('video')) {
             $video->video_path = $this->uploadFile($request->file('video'), 'video');
         }
 
@@ -199,7 +199,76 @@ class VideoController extends Controller
         return redirect()->route('video-detail', $video->id)->with(['message' => 'EL video se actualizo correctamente']);
 
 
+    }
+
+    public function search($search = null, $filter = null)
+    {
+
+
+
+
+        if (is_null($filter) && \Request::get('filter') && !is_null($search)) {
+            $filter = \Request::get('filter');
+
+            return redirect()->route('videoSearch', ['$search' => $search,
+                'filter' => $filter]);
+        }
+
+
+
+
+        if (is_null($search) && is_null(\Request::get('search'))) {
+
+            //redirigimos a este mismo contraldo, pero esta ves se corrige la url
+            return redirect()->route('home')->with(['message'=> 'Busca por algun termino']);
+        }
+
+
+        if (is_null($search)) {
+            $search = \Request::get('search');  //es como si = $_GET['search']
+
+            //redirigimos a este mismo contraldo, pero esta ves se corrige la url
+            return redirect()->route('videoSearch', ['$search' => $search]);
+        }
+
+
+
+
+        //Si vienen datos de filtro
+        $column = 'id';
+        $order = 'desc';
+        if (!is_null($filter)) {
+
+
+            switch ($filter) {
+
+                case 'new':
+                    $column = 'id';
+                    $order = 'desc';
+                    break;
+                case 'old':
+                    $column = 'id';
+                    $order = 'asc';
+                    break;
+
+                case 'az':
+                    $column = 'title';
+                    $order = 'asc';
+                    break;
+            }
+        }
+
+
+        $result = Video::where('title', 'LIKE', '%' . $search . '%')->orderBy($column, $order)->paginate(5);
+
+        //dd($result);
+
+        return view('video.search', [
+            'videos' => $result,
+            'search' => $search
+        ]);
 
     }
+
 
 }

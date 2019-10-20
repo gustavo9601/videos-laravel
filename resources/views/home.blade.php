@@ -17,13 +17,42 @@
                         </div>
                     @endif
 
+                    {{--Si recibimos la variable -4search--}}
+                    @if(@$search)
+                        <div class="card-header">
+
+
+                            <div class="alert alert-success">
+                                <h2>Busqueda: {{ $search  }}</h2>
+                            </div>
+
+
+                            <form action="{{url('buscar/'. $search)}}">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <select name="filter" id="" class="form-control">
+                                            <option value="new">Mas nuevos</option>
+                                            <option value="old">Mas viejos</option>
+                                            <option value="az">A - Z</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="submit" value="Filtrar" class="btn btn-outline-dark">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    @endif
+
+
                     <div class="card-header">Videos</div>
 
                     <div class="card-body">
 
 
                         {{--Validamos si se envia a la vista los videos--}}
-                        @if($videos)
+                        @if(count($videos) >= 1)
 
                             <div class="row">
 
@@ -57,10 +86,15 @@
                                             <div class="card-body">
                                                 <a href="{{url('video-detail/' . $video->id)}}"
                                                    class="btn btn-outline-info">Ver Video</a>
+                                                <a href="{{url('canal/' . $video->user_id)}}"
+                                                   class="btn btn-outline-warning">Ver autor</a>
                                                 {{--Comprobacion si el usuario atenticado, es el mismo que creo el video , solo el prodra modificarlo--}}
                                                 @if(Auth::user()->id == $video->user_id)
-                                                    <a href="{{'update-video'}}/{{$video->id}}" class="btn btn-outline-dark">Editar Video</a>
-                                                    <a href="{{url('delete-video')}}/{{$video->id}}" class="btn btn-outline-danger">Eliminar Video</a>
+                                                    <a href="{{'update-video'}}/{{$video->id}}"
+                                                       class="btn btn-outline-dark">Editar Video</a>
+                                                    <a href="{{url('delete-video')}}/{{$video->id}}"
+                                                       class="btn btn-outline-danger">Eliminar Video</a>
+
                                                 @endif
 
                                             </div>
@@ -78,9 +112,16 @@
                             $videos->links()  // seleccionamos la variable paginada
                             // con links() automaticamente pinta la navegacion con boostrap
                             --}}
+
+
+
+
                             {{$videos->links()}}
 
 
+                        @else
+
+                            <div class="alert alert-warning">No hay video que mostrar</div>
 
                         @endif
 

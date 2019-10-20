@@ -46,7 +46,7 @@
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
-                    <form class="form-inline my-2 my-lg-0">
+                    <form class="form-inline my-2 my-lg-0" action="{{url('buscar')}}">
                         <input class="form-control mr-sm-2" type="search" placeholder="Buscar video" name="search"
                                aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
